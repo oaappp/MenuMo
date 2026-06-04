@@ -1,0 +1,80 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Sign Up - MenuMo{% endblock %}
+
+{% block content %}
+<div class="container py-5">
+    <div class="row justify-content-center">
+        <div class="col-md-5">
+            <div class="card auth-card shadow-sm">
+                <div class="card-body p-4">
+                    <div class="text-center mb-4">
+                        <span class="auth-icon">🍽️</span>
+                        <h3 class="mt-2">Join MenuMo!</h3>
+                        <p class="text-muted">Create your account to save meal plans</p>
+                    </div>
+
+                    <form method="post" action="{% url 'account_signup' %}">
+                        {% csrf_token %}
+
+                        {% if form.non_field_errors %}
+                        <div class="alert alert-danger">
+                            {% for error in form.non_field_errors %}
+                                {{ error }}
+                            {% endfor %}
+                        </div>
+                        {% endif %}
+
+                        <div class="mb-3">
+                            <label for="id_email" class="form-label">Email</label>
+                            <input type="email" name="email" id="id_email" class="form-control form-control-lg" placeholder="Enter your email" required>
+                            {% if form.email.errors %}
+                            <div class="text-danger small mt-1">{{ form.email.errors.0 }}</div>
+                            {% endif %}
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="id_username" class="form-label">Username</label>
+                            <input type="text" name="username" id="id_username" class="form-control form-control-lg" placeholder="Choose a username" required>
+                            {% if form.username.errors %}
+                            <div class="text-danger small mt-1">{{ form.username.errors.0 }}</div>
+                            {% endif %}
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="id_password1" class="form-label">Password</label>
+                            <input type="password" name="password1" id="id_password1" class="form-control form-control-lg" placeholder="Create a password" required>
+                            {% if form.password1.errors %}
+                            <div class="text-danger small mt-1">{{ form.password1.errors.0 }}</div>
+                            {% endif %}
+                            <div class="form-text small">{{ form.password1.help_text }}</div>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="id_password2" class="form-label">Confirm Password</label>
+                            <input type="password" name="password2" id="id_password2" class="form-control form-control-lg" placeholder="Confirm your password" required>
+                            {% if form.password2.errors %}
+                            <div class="text-danger small mt-1">{{ form.password2.errors.0 }}</div>
+                            {% endif %}
+                        </div>
+
+                        {% if redirect_field_value %}
+                        <input type="hidden" name="{{ redirect_field_name }}" value="{{ redirect_field_value }}" />
+                        {% endif %}
+
+                        <button type="submit" class="btn btn-primary w-100 btn-lg mb-3">Sign Up</button>
+                    </form>
+
+                    <hr class="my-4">
+
+                    <div class="text-center">
+                        <p class="mb-0">Already have an account?</p>
+                        <a href="{% url 'account_login' %}" class="btn btn-outline-primary mt-2">Sign In</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,133 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Your Meal Plan - MenuMo{% endblock %}
+
+{% block content %}
+<section class="meal-plan-section">
+    <div class="container">
+        <!-- Plan Header -->
+        <div class="plan-header">
+            <div class="row align-items-center">
+                <div class="col-md-8">
+                    <h2 class="mb-2">🍽️ Your Weekly Meal Plan</h2>
+                    <p class="mb-0">
+                        <span class="badge bg-light text-dark me-2">Budget: ₱{{ meal_plan.budget }}</span>
+                        <span class="badge bg-light text-dark me-2">Members: {{ meal_plan.members }}</span>
+                        <span class="badge bg-light text-dark me-2">Region: {{ meal_plan.region }}</span>
+                        {% if meal_plan.dietary %}
+                        <span class="badge bg-light text-dark">{{ meal_plan.dietary }}</span>
+                        {% endif %}
+                    </p>
+                </div>
+                <div class="col-md-4 text-md-end mt-3 mt-md-0">
+                    <a href="{% url 'grocery_list' meal_plan.id %}" class="btn btn-light me-2">
+                        <i class="bi bi-cart"></i> Grocery List
+                    </a>
+                    <a href="{% url 'export_pdf' meal_plan.id %}" class="btn btn-light">
+                        <i class="bi bi-file-pdf"></i> Download PDF
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Action Buttons -->
+        <div class="d-flex justify-content-between align-items-center mb-4">
+            <div>
+                {% if user.is_authenticated %}
+                <button class="btn btn-success" id="save-plan-btn" data-plan-id="{{ meal_plan.id }}">
+                    <i class="bi bi-bookmark"></i> Save Plan
+                </button>
+                {% else %}
+                <a href="{% url 'account_login' %}" class="btn btn-outline-primary">
+                    <i class="bi bi-box-arrow-in-right"></i> Login to Save Plan
+                </a>
+                {% endif %}
+            </div>
+            <a href="{% url 'planner' %}" class="btn btn-outline-primary">
+                <i class="bi bi-plus-circle"></i> New Plan
+            </a>
+        </div>
+
+        <!-- Meal Plan Grid -->
+        <div class="row">
+            {% for day_data in plan_data.days %}
+            <div class="col-lg-4 col-md-6 mb-4">
+                <div class="day-card">
+                    <div class="day-header">{{ day_data.day }}</div>
+                    
+                    {% for meal_type, meal in day_data.meals.items %}
+                    <div class="meal-card">
+                        <div class="d-flex justify-content-between align-items-start">
+                            <div>
+                                <span class="meal-type-badge meal-type-{{ meal_type }}">{{ meal_type }}</span>
+                                <div class="meal-name mt-1">{{ meal.name }}</div>
+                                <div class="meal-cook-time mt-1">
+                                    <i class="bi bi-clock"></i> {{ meal.cook_time }}
+                                </div>
+                            </div>
+                            <div class="text-end">
+                                <div class="meal-cost">₱{{ meal.estimated_cost }}</div>
+                                <button class="btn btn-sm btn-outline-primary regenerate-btn mt-1" 
+                                        data-plan-id="{{ meal_plan.id }}"
+                                        data-day="{{ day_data.day }}"
+                                        data-meal-type="{{ meal_type }}">
+                                    <i class="bi bi-arrow-repeat"></i> Regenerate
+                                </button>
+                            </div>
+                        </div>
+                        
+                        <!-- Ingredients -->
+                        <div class="mt-2">
+                            <small class="text-muted">
+                                <i class="bi bi-basket"></i> 
+                                {% for ingredient in meal.ingredients %}
+                                    {{ ingredient }}{% if not forloop.last %}, {% endif %}
+                                {% endfor %}
+                            </small>
+                        </div>
+                        
+                        <!-- Toggle Instructions -->
+                        <button class="btn btn-sm btn-link text-muted p-0 mt-1 toggle-instructions">
+                            ▼ Instructions
+                        </button>
+                        <div class="meal-instructions">
+                            {{ meal.instructions|linebreaks }}
+                        </div>
+                    </div>
+                    {% endfor %}
+                    
+                    <div class="day-total">Day Total: ₱{{ day_data.day_total }}</div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+
+        <!-- Weekly Total -->
+        <div class="weekly-total-card">
+            <p class="mb-1 fs-5">Weekly Total</p>
+            <h3 class="weekly-total-amount">₱{{ plan_data.weekly_total }}</h3>
+            <p class="mb-0 mt-2">
+                <span class="badge bg-light text-dark">
+                    Budget: ₱{{ meal_plan.budget }} | 
+                    {% if plan_data.weekly_total <= meal_plan.budget %}
+                        <span class="text-success">✓ Within Budget</span>
+                    {% else %}
+                        <span class="text-warning">⚠ Over Budget</span>
+                    {% endif %}
+                </span>
+            </p>
+        </div>
+
+        <!-- Bottom Actions -->
+        <div class="text-center mt-4">
+            <a href="{% url 'grocery_list' meal_plan.id %}" class="btn btn-success btn-lg me-2">
+                <i class="bi bi-cart"></i> View Grocery List
+            </a>
+            <a href="{% url 'export_pdf' meal_plan.id %}" class="btn btn-primary btn-lg">
+                <i class="bi bi-file-pdf"></i> Download PDF
+            </a>
+        </div>
+    </div>
+</section>
+{% endblock %}

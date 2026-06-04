@@ -1,0 +1,106 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Plan Meal - MenuMo{% endblock %}
+
+{% block content %}
+<!-- Loading Overlay -->
+<div class="loading-overlay" id="loading-overlay">
+    <div class="loading-content">
+        <div class="loading-spinner"></div>
+        <h4>Inaayos ni MenuMo ang meals mo...</h4>
+        <p class="text-muted">Gamit ang AI, binubuo namin ang perfect meal plan para sa inyo.</p>
+    </div>
+</div>
+
+<section class="planner-section">
+    <div class="container">
+        <div class="text-center mb-5">
+            <h1 class="section-title">Plan Your Week</h1>
+            <p class="text-muted">Sagutan ang form at kami na bahala sa meals nyo para sa linggo!</p>
+        </div>
+
+        <div class="planner-card">
+            <form method="POST" action="{% url 'generate_plan' %}" id="planner-form">
+                {% csrf_token %}
+
+                <!-- Weekly Budget -->
+                <div class="mb-4">
+                    <label for="budget" class="form-label">Weekly Food Budget (₱)</label>
+                    <div class="input-group">
+                        <span class="input-group-text">₱</span>
+                        <input type="number" class="form-control" id="budget" name="budget" 
+                               min="500" max="10000" value="2000" required>
+                    </div>
+                    <div class="form-text">Recommended: ₱1,000 - ₱5,000 for a family of 4</div>
+                </div>
+
+                <!-- Number of Family Members -->
+                <div class="mb-4">
+                    <label for="members" class="form-label">Number of Family Members</label>
+                    <input type="number" class="form-control" id="members" name="members" 
+                           min="1" max="20" value="4" required>
+                </div>
+
+                <!-- Dietary Restrictions -->
+                <div class="mb-4">
+                    <label class="form-label">Dietary Restrictions</label>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" name="no_pork" value="no_pork" id="no_pork">
+                                <label class="form-check-label" for="no_pork">No Pork</label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" name="no_beef" value="no_beef" id="no_beef">
+                                <label class="form-check-label" for="no_beef">No Beef</label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" name="vegetarian" value="vegetarian" id="vegetarian">
+                                <label class="form-check-label" for="vegetarian">Vegetarian</label>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" name="no_seafood" value="no_seafood" id="no_seafood">
+                                <label class="form-check-label" for="no_seafood">No Seafood</label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" name="no_spicy" value="no_spicy" id="no_spicy">
+                                <label class="form-check-label" for="no_spicy">No Spicy</label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Region -->
+                <div class="mb-4">
+                    <label for="region" class="form-label">Region</label>
+                    <select class="form-select" id="region" name="region" required>
+                        <option value="">Select your region...</option>
+                        <option value="Luzon">Luzon</option>
+                        <option value="Visayas">Visayas</option>
+                        <option value="Mindanao">Mindanao</option>
+                    </select>
+                    <div class="form-text">Affects ingredient availability and local dish suggestions</div>
+                </div>
+
+                <!-- Available Ingredients -->
+                <div class="mb-4">
+                    <label for="ingredients" class="form-label">Ingredients You Already Have (Optional)</label>
+                    <textarea class="form-control" id="ingredients" name="ingredients" 
+                              rows="2" placeholder="e.g., rice, eggs, garlic, onion"></textarea>
+                    <div class="form-text">List ingredients na nasa bahay nyo na para hindi na ulit bilhin.</div>
+                </div>
+
+                <!-- Submit -->
+                <div class="d-grid gap-2">
+                    <button type="submit" class="btn btn-primary btn-lg">
+                        <i class="bi bi-magic"></i> Generate Meal Plan
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</section>
+{% endblock %}

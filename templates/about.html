@@ -1,0 +1,83 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}About - MenuMo{% endblock %}
+
+{% block content %}
+<section class="about-section">
+    <div class="container">
+        <div class="text-center mb-5">
+            <h1 class="section-title">About Menu Mo</h1>
+            <p class="text-muted fs-5 mt-3">"Anong ulam ngayong linggo? MenuMo bahala na."</p>
+        </div>
+
+        <div class="row mb-5">
+            <div class="col-lg-8 mx-auto">
+                <div class="card p-4">
+                    <h3>Ang Kwento ng MenuMo</h3>
+                    <p>
+                        MenuMo ay isang AI-powered weekly meal planning web app na ginawa para sa 
+                        bawat Filipino household. Alam namin ang hirap ng mag-isip kung anong ulam 
+                        araw-araw lalo na kapag may budget na dapat bantayan.
+                    </p>
+                    <p>
+                        Sa MenuMo, ilagay mo lang ang weekly food budget, bilang ng family members, 
+                        dietary preferences, at region mo at bubuo kami ng complete 7-day Filipino 
+                        meal plan na may estimated costs, grocery list, at cooking instructions.
+                    </p>
+                    <p>
+                        Ang goal namin ay tulungan ang mga Filipino families at students na mag- 
+                        meal plan nang hindi stress, makatipid sa grocery, at kumain ng masasarap 
+                        at masusustansyang pagkain araw-araw.
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <h2 class="section-title text-center d-block mb-5">Meet the Team</h2>
+        <div class="row g-4">
+            <div class="col-md-6">
+                <div class="team-card">
+                    <div class="team-avatar">👨‍💻</div>
+                    <h5>John Paolo Narvasa</h5>
+                    <p class="text-muted">Lead Developer & UI/UX Designer</p>
+                    <p class="small">Full-stack developer and designer specializing in Django, AI integration, and user-friendly interfaces with Filipino cultural touch.</p>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="team-card">
+                    <div class="team-avatar">👨‍🍳</div>
+                    <h5>Jude Michael Gigante</h5>
+                    <p class="text-muted">Content & Research</p>
+                    <p class="small">Ensuring authentic Filipino dishes, accurate ingredient costs, and quality content for every meal plan.</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="row mt-5">
+            <div class="col-lg-8 mx-auto">
+                <div class="card p-4">
+                    <h3>Tech Stack</h3>
+                    <div class="row mt-3">
+                        <div class="col-md-6">
+                            <ul class="list-unstyled">
+                                <li class="mb-2">🔹 <strong>Backend:</strong> Django (Python)</li>
+                                <li class="mb-2">🔹 <strong>Database:</strong> SQLite / PostgreSQL</li>
+                                <li class="mb-2">🔹 <strong>AI:</strong> Google Gemini API</li>
+                                <li class="mb-2">🔹 <strong>PDF:</strong> xhtml2pdf</li>
+                            </ul>
+                        </div>
+                        <div class="col-md-6">
+                            <ul class="list-unstyled">
+                                <li class="mb-2">🔹 <strong>Frontend:</strong> HTML5, CSS3, Bootstrap 5</li>
+                                <li class="mb-2">🔹 <strong>Auth:</strong> Django-allauth</li>
+                                <li class="mb-2">🔹 <strong>Deployment:</strong> PythonAnywhere</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}

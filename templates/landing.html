@@ -1,0 +1,134 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}MenuMo - AI Weekly Filipino Meal Planner{% endblock %}
+
+{% block content %}
+<!-- Hero Section -->
+<section class="hero-section">
+    <div class="container">
+        <h1 class="fade-in">🍽️ MenuMo</h1>
+        <p class="tagline">"Anong ulam ngayong linggo? MenuMo bahala na."</p>
+        <p class="lead">AI-powered weekly meal planning para sa bawat Filipino family. Budget-friendly, masarap, at walang stress!</p>
+        {% if user.is_authenticated %}
+        <a href="{% url 'planner' %}" class="hero-cta">Plan My Week →</a>
+        {% else %}
+        <a href="{% url 'account_signup' %}" class="hero-cta">Plan My Week →</a>
+        {% endif %}
+
+    </div>
+</section>
+
+<!-- How It Works -->
+<section class="py-5">
+    <div class="container">
+        <h2 class="section-title text-center d-block mb-5">Paano Ito Gumagana</h2>
+        <div class="row g-4">
+            <div class="col-md-4">
+                <div class="step-card">
+                    <div class="step-number">1</div>
+                    <h5>Fill Up ang Form</h5>
+                    <p>Ilagay ang budget, bilang ng family members, dietary preferences, at region mo.</p>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="step-card">
+                    <div class="step-number">2</div>
+                    <h5>AI ang Bahala</h5>
+                    <p>Gamit ang AI, bubuo kami ng 7-day meal plan na swak sa budget at panlasa nyo.</p>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="step-card">
+                    <div class="step-number">3</div>
+                    <h5>Download at Luto Na!</h5>
+                    <p>Kunin ang grocery list at PDF plan. Ready ka na para sa linggo!</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Sample Meal Plan Preview -->
+<section class="py-5 bg-white">
+    <div class="container">
+        <h2 class="section-title text-center d-block mb-5">Sample Meal Plan</h2>
+        <div class="row">
+            {% for day in sample_days %}
+            <div class="col-md-4 mb-3">
+                <div class="day-card">
+                    <div class="day-header">{{ day.day }}</div>
+                    {% for meal_type, meal in day.meals.items %}
+                    <div class="meal-card">
+                        <div class="d-flex justify-content-between align-items-start">
+                            <div>
+                                <span class="meal-type-badge meal-type-{{ meal_type }}">{{ meal_type }}</span>
+                                <div class="meal-name mt-1">{{ meal.name }}</div>
+                            </div>
+                            <div class="text-end">
+                                <div class="meal-cost">₱{{ meal.estimated_cost }}</div>
+                                <div class="meal-cook-time">{{ meal.cook_time }}</div>
+                            </div>
+                        </div>
+                    </div>
+                    {% endfor %}
+                    <div class="day-total">Total: ₱{{ day.day_total }}</div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+        <div class="text-center mt-3">
+            {% if user.is_authenticated %}
+            <a href="{% url 'planner' %}" class="btn btn-primary btn-lg">Gumawa ng Sarili Kong Plan</a>
+            {% else %}
+            <a href="{% url 'account_signup' %}" class="btn btn-primary btn-lg">Gumawa ng Sarili Kong Plan</a>
+            {% endif %}
+        </div>
+
+    </div>
+</section>
+
+<!-- Bakit MenuMo -->
+<section class="py-5">
+    <div class="container">
+        <h2 class="section-title text-center d-block mb-5">Bakit MenuMo?</h2>
+        <div class="row g-4">
+            <div class="col-md-4">
+                <div class="benefit-card">
+                    <div class="benefit-icon">💰</div>
+                    <h5>Tipid sa Budget</h5>
+                    <p class="text-muted">Hindi na magugulat sa grocery bill. Planado ang bawat meal para swak sa weekly budget mo.</p>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="benefit-card">
+                    <div class="benefit-icon">🧠</div>
+                    <h5>AI-Powered Suggestions</h5>
+                    <p class="text-muted">Hindi na iisipin kung anong ulam araw-araw. Si MenuMo na ang bahala mag-plan para sa'yo.</p>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="benefit-card">
+                    <div class="benefit-icon">🇵🇭</div>
+                    <h5>Pinoy Dishes, Local Ingredients</h5>
+                    <p class="text-muted">Adobo, sinigang, tinola at marami pa! Lahat ay gamit ang ingredients na available sa inyong rehiyon.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- CTA Section -->
+<section class="py-5" style="background: linear-gradient(135deg, var(--primary-dark), var(--primary));">
+    <div class="container text-center text-white">
+        <h2 class="mb-3">Handa ka na bang mag-plan?</h2>
+        <p class="mb-4 fs-5">Sagutan ang form at kami na bahala sa meals nyo para sa linggo!</p>
+        {% if user.is_authenticated %}
+        <a href="{% url 'planner' %}" class="hero-cta">Simulan Na →</a>
+        {% else %}
+        <a href="{% url 'account_signup' %}" class="hero-cta">Simulan Na →</a>
+        {% endif %}
+
+    </div>
+</section>
+{% endblock %}

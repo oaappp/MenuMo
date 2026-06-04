@@ -1,0 +1,90 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Grocery List - MenuMo{% endblock %}
+
+{% block content %}
+<section class="grocery-section">
+    <div class="container">
+        <div class="d-flex justify-content-between align-items-center mb-4">
+            <div>
+                <h1 class="section-title mb-0">🛒 Grocery List</h1>
+                <p class="text-muted mt-2">Tick off items habang namimili ka!</p>
+            </div>
+            <div>
+                <a href="{% url 'plan_view' meal_plan.id %}" class="btn btn-outline-primary me-2">
+                    <i class="bi bi-calendar-week"></i> Back to Plan
+                </a>
+                <a href="{% url 'export_pdf' meal_plan.id %}" class="btn btn-primary">
+                    <i class="bi bi-file-pdf"></i> Download PDF
+                </a>
+            </div>
+        </div>
+
+        <!-- Grocery Summary -->
+        <div class="row mb-4">
+            <div class="col-md-6">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">Plan Details</h5>
+                        <p class="mb-1"><strong>Budget:</strong> ₱{{ meal_plan.budget }}</p>
+                        <p class="mb-1"><strong>Members:</strong> {{ meal_plan.members }}</p>
+                        <p class="mb-0"><strong>Region:</strong> {{ meal_plan.region }}</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">Grocery Total</h5>
+                        <h2 class="text-success mb-0">₱{{ total_cost }}</h2>
+                        <small class="text-muted">Estimated total cost of all ingredients</small>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Grocery Items by Category -->
+        {% for category, items in categories.items %}
+        <div class="grocery-category">
+            <h4>
+                {% if category == 'Vegetables' %}🥬 
+                {% elif category == 'Protein' %}🥩 
+                {% elif category == 'Pantry' %}🥫 
+                {% elif category == 'Dairy' %}🧀 
+                {% elif category == 'Fruits' %}🍎 
+                {% elif category == 'Spices' %}🌶️ 
+                {% else %}📦 
+                {% endif %}
+                {{ category }}
+            </h4>
+            {% for item in items %}
+            <div class="grocery-item">
+                <input class="form-check-input grocery-checkbox" type="checkbox" id="item_{{ forloop.parentloop.counter }}_{{ forloop.counter }}">
+                <label class="grocery-item-name" for="item_{{ forloop.parentloop.counter }}_{{ forloop.counter }}">
+                    {{ item.item }}
+                </label>
+                <span class="grocery-item-qty">{{ item.quantity }}</span>
+                <span class="grocery-item-cost">₱{{ item.est_cost }}</span>
+            </div>
+            {% endfor %}
+        </div>
+        {% empty %}
+        <div class="text-center py-5">
+            <h4 class="text-muted">No grocery items found.</h4>
+            <a href="{% url 'plan_view' meal_plan.id %}" class="btn btn-primary mt-3">Back to Meal Plan</a>
+        </div>
+        {% endfor %}
+
+        <!-- Bottom Actions -->
+        <div class="text-center mt-4">
+            <a href="{% url 'plan_view' meal_plan.id %}" class="btn btn-outline-primary btn-lg me-2">
+                <i class="bi bi-calendar-week"></i> Back to Meal Plan
+            </a>
+            <a href="{% url 'export_pdf' meal_plan.id %}" class="btn btn-primary btn-lg">
+                <i class="bi bi-file-pdf"></i> Download PDF
+            </a>
+        </div>
+    </div>
+</section>
+{% endblock %}
