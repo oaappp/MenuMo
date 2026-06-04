@@ -332,21 +332,11 @@ def export_pdf(request, plan_id):
     html_content = render_to_pdf_html(meal_plan, plan_data)
 
     try:
-        from weasyprint import HTML
-        pdf_file = HTML(string=html_content).write_pdf()
-        response = HttpResponse(pdf_file, content_type='application/pdf')
+        from xhtml2pdf import pisa
+        response = HttpResponse(content_type='application/pdf')
         response['Content-Disposition'] = f'attachment; filename="menumo_plan_{meal_plan.id}.pdf"'
-        return response
-    except ImportError:
-        try:
-            from xhtml2pdf import pisa
-            response = HttpResponse(content_type='application/pdf')
-            response['Content-Disposition'] = f'attachment; filename="menumo_plan_{meal_plan.id}.pdf"'
-            pisa_status = pisa.CreatePDF(html_content, dest=response)
-            if pisa_status.err:
-                return HttpResponse('PDF generation failed', status=500)
-            return response
-        except ImportError:
+        pisa_status = pisa.CreatePDF(html_content, dest=response)
+        if pisa_status.err:
             return render(request, 'pdf_export.html', {
                 'meal_plan': meal_plan,
                 'plan_data': plan_data,
@@ -354,6 +344,15 @@ def export_pdf(request, plan_id):
                 'weekly_total': plan_data.get('weekly_total', 0),
                 'grocery_list': plan_data.get('grocery_list', []),
             })
+        return response
+    except Exception:
+        return render(request, 'pdf_export.html', {
+            'meal_plan': meal_plan,
+            'plan_data': plan_data,
+            'days': plan_data.get('days', []),
+            'weekly_total': plan_data.get('weekly_total', 0),
+            'grocery_list': plan_data.get('grocery_list', []),
+        })
 
 
 def render_to_pdf_html(meal_plan, plan_data):
@@ -754,5 +753,3 @@ def generate_fallback_plan(budget, members, dietary, region):
         'weekly_total': weekly_total,
         'grocery_list': grocery_list
     }
-
-
