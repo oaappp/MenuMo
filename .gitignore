@@ -36,3 +36,7 @@ staticfiles/
 
 # Project specific
 task_progress.md
+
+# Documents
+*.docx
+*.doc

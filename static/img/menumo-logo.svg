@@ -1,0 +1,31 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 60" fill="none">
+  <defs>
+    <linearGradient id="logoGrad" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#D35400"/>
+      <stop offset="50%" stop-color="#E67E22"/>
+      <stop offset="100%" stop-color="#F39C12"/>
+    </linearGradient>
+  </defs>
+  <!-- Plate/bowl icon -->
+  <g transform="translate(4, 4)">
+    <!-- Plate outer rim -->
+    <circle cx="26" cy="26" r="24" fill="url(#logoGrad)" opacity="0.15"/>
+    <circle cx="26" cy="26" r="24" stroke="url(#logoGrad)" stroke-width="2.5"/>
+    <!-- Inner plate -->
+    <circle cx="26" cy="26" r="16" fill="url(#logoGrad)" opacity="0.08"/>
+    <circle cx="26" cy="26" r="16" stroke="url(#logoGrad)" stroke-width="1.5" opacity="0.6"/>
+    <!-- Rice bowl stylized -->
+    <ellipse cx="26" cy="27" rx="10" ry="7" fill="url(#logoGrad)" opacity="0.3"/>
+    <!-- Steam lines -->
+    <path d="M22 18 Q24 14 22 10" stroke="url(#logoGrad)" stroke-width="2" fill="none" stroke-linecap="round" opacity="0.5"/>
+    <path d="M26 16 Q28 12 26 8" stroke="url(#logoGrad)" stroke-width="2" fill="none" stroke-linecap="round" opacity="0.6"/>
+    <path d="M30 18 Q32 14 30 10" stroke="url(#logoGrad)" stroke-width="2" fill="none" stroke-linecap="round" opacity="0.5"/>
+    <!-- Spoon -->
+    <path d="M12 38 L15 35 Q17 33 19 35 L16 39 Q14 41 12 38Z" fill="url(#logoGrad)" opacity="0.7"/>
+    <line x1="17" y1="36" x2="22" y2="31" stroke="url(#logoGrad)" stroke-width="2" stroke-linecap="round" opacity="0.7"/>
+  </g>
+  <!-- Text: MenuMo -->
+  <text x="62" y="36" font-family="'Segoe UI', Arial, sans-serif" font-size="26" font-weight="800" fill="url(#logoGrad)" letter-spacing="-0.5">MenuMo</text>
+  <!-- Tagline -->
+  <text x="62" y="52" font-family="'Segoe UI', Arial, sans-serif" font-size="8" fill="#7F8C8D" letter-spacing="1.5" font-weight="600">AI WEEKLY MEAL PLANNER</text>
+</svg>

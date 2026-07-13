@@ -15,7 +15,7 @@
     <nav class="navbar navbar-expand-lg navbar-dark sticky-top">
         <div class="container">
             <a class="navbar-brand" href="{% url 'landing' %}">
-                <span class="brand-icon">🍽️</span> MenuMo
+                <img src="{% static 'img/menumo-logo.svg' %}" alt="MenuMo" height="40" class="d-inline-block align-top">
             </a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
                 <span class="navbar-toggler-icon"></span>
@@ -79,7 +79,10 @@
         <div class="container">
             <div class="row">
                 <div class="col-md-6">
-                    <h5>🍽️ MenuMo</h5>
+                    <h5>
+                        <img src="{% static 'img/menumo-logo.svg' %}" alt="MenuMo" height="28" class="d-inline-block align-top me-1" style="filter: brightness(0) invert(1);">
+                        MenuMo
+                    </h5>
                     <p class="text-muted">"Anong ulam ngayong linggo? MenuMo bahala na."</p>
                 </div>
                 <div class="col-md-3">

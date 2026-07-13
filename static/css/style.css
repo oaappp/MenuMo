@@ -31,12 +31,16 @@ body {
 }
 
 .navbar-brand {
-    font-size: 1.5rem;
-    font-weight: 700;
+    padding: 0;
+    line-height: 1;
 }
 
-.brand-icon {
-    font-size: 1.5rem;
+.navbar-brand img {
+    transition: opacity 0.3s ease;
+}
+
+.navbar-brand:hover img {
+    opacity: 0.85;
 }
 
 .btn-nav-cta {

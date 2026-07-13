@@ -7,7 +7,10 @@
 <!-- Hero Section -->
 <section class="hero-section">
     <div class="container">
-        <h1 class="fade-in">🍽️ MenuMo</h1>
+        <h1 class="fade-in">
+            <img src="{% static 'img/menumo-logo.svg' %}" alt="MenuMo" height="65" class="d-inline-block align-top me-2" style="filter: brightness(0) invert(1);">
+            MenuMo
+        </h1>
         <p class="tagline">"Anong ulam ngayong linggo? MenuMo bahala na."</p>
         <p class="lead">AI-powered weekly meal planning para sa bawat Filipino family. Budget-friendly, masarap, at walang stress!</p>
         {% if user.is_authenticated %}
